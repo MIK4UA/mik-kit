@@ -101,5 +101,9 @@ test('cli: check-headers reads a live response', async () => {
     assert.match(ok.stdout, /OK/);
     await assert.rejects(run(process.execPath, [cli, 'check-headers', `${base}/good`, `${base}/bad`]),
       (e) => e.code === 1 && /FAIL .*\/bad/.test(e.stderr));
+    await assert.rejects(run(process.execPath, [cli, 'check-headers', '--json', `${base}/good`, `${base}/bad`]), (e) => {
+      const [g, b] = JSON.parse(e.stdout);
+      return e.code === 1 && g.ok && g.status === 200 && !b.ok && b.problems.length > 0;
+    });
   } finally { srv.close(); }
 });

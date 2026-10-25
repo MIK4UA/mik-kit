@@ -2,7 +2,7 @@
 // mik-kit CLI — the same checks for every MIK product, whoever (or whichever agent) wrote it.
 //   mik-kit check-i18n     [--config mik-kit.config.mjs]   languages check, run in prebuild
 //   mik-kit nginx-headers  [--config mik-kit.config.mjs]   print the nginx include with headers + CSP
-//   mik-kit check-headers  <url> [<url>...]                live check: headers + CSP on real responses
+//   mik-kit check-headers  <url> [<url>...] [--json]       live check: headers + CSP on real responses
 import { existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -40,18 +40,23 @@ const commands = {
   async 'check-headers'() {
     const urls = args.filter(a => !a.startsWith('--'));
     if (!urls.length) throw new Error('give at least one URL');
-    let bad = 0;
+    const json = args.includes('--json');   // for sensors (LifeOS coherence sensor): one array on stdout
+    const results = [];
     for (const url of urls) {
-      let problems;
+      let problems, status = 0;
       try {
         const res = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(15000) });
+        status = res.status;
         problems = auditHeaders(res.headers);
         if (res.status >= 400) problems.unshift(`HTTP ${res.status}`);
       } catch (e) { problems = [`request failed: ${e.message}`]; }
-      if (problems.length) { bad++; console.error(`[check-headers] FAIL ${url}\n  ` + problems.join('\n  ')); }
+      results.push({ url, status, ok: !problems.length, problems });
+      if (json) continue;
+      if (problems.length) console.error(`[check-headers] FAIL ${url}\n  ` + problems.join('\n  '));
       else console.log(`[check-headers] OK   ${url}`);
     }
-    return bad ? 1 : 0;
+    if (json) console.log(JSON.stringify(results));
+    return results.some(r => !r.ok) ? 1 : 0;
   },
 };
 

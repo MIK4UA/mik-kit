@@ -16,7 +16,7 @@ Later: MIK ID client (B4, Ф5).
 ## Connect a product
 
 ```json
-"dependencies": { "mik-kit": "github:MIK4UA/mik-kit#v0.1.1" },
+"dependencies": { "mik-kit": "github:MIK4UA/mik-kit#v0.1.2" },
 "scripts": { "prebuild": "mik-kit check-i18n" }
 ```
 
@@ -56,6 +56,7 @@ Static site: copy `coolify/Dockerfile.static` → `Dockerfile` and `coolify/ngin
 
 ```
 npx mik-kit check-headers https://mik4ua.pp.ua/ https://mik4ua.pp.ua/ru/ https://mik4ua.pp.ua/en/
+npx mik-kit check-headers --json https://mik4ua.pp.ua/    # machine output for sensors
 ```
 
 ## Change the brand

@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.2 — 2026-10-26
+- `check-headers --json`: one JSON array on stdout (`url`, `status`, `ok`, `problems`) for sensors — the LifeOS coherence sensor calls the kit instead of repeating the check. The lock file now carries the package version.
+
 ## 0.1.1 — 2026-10-26
 - Connecting a product needs `.npmrc` with `allow-git=root`: npm 12 blocks git dependencies by default (found on the first install from GitHub). README and `Dockerfile.static` (copies `.npmrc`, installs git) updated.
 
