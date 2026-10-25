@@ -1,6 +1,6 @@
 {
   "name": "mik-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared base for every MIK site and service on own code: brand tokens, security headers + CSP, languages check, Coolify template",
   "type": "module",
   "license": "UNLICENSED",

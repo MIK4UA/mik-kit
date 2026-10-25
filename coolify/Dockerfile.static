@@ -2,7 +2,9 @@
 # copy to the product as Dockerfile, together with coolify/nginx.conf. Push = deploy; the previous image = rollback.
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY package*.json ./
+# git: mik-kit comes as a git dependency; .npmrc carries allow-git=root (npm 12 blocks git deps by default)
+RUN apk add --no-cache git
+COPY package*.json .npmrc ./
 RUN npm ci
 COPY . .
 # prebuild runs `mik-kit check-i18n` — a missing translation fails the deploy, not the visitor

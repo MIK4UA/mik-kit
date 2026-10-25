@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.1 — 2026-10-26
+- Connecting a product needs `.npmrc` with `allow-git=root`: npm 12 blocks git dependencies by default (found on the first install from GitHub). README and `Dockerfile.static` (copies `.npmrc`, installs git) updated.
+
 ## 0.1.0 — 2026-10-25
 - Brand tokens generated from `wiki/brand-identity.md` (light + dark, Montserrat, type scale, weights); drift check.
 - Self-hosted Montserrat 400/700/900.

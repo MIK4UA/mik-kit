@@ -16,8 +16,14 @@ Later: MIK ID client (B4, Ф5).
 ## Connect a product
 
 ```json
-"dependencies": { "mik-kit": "github:MIK4UA/mik-kit#v0.1.0" },
+"dependencies": { "mik-kit": "github:MIK4UA/mik-kit#v0.1.1" },
 "scripts": { "prebuild": "mik-kit check-i18n" }
+```
+
+`.npmrc` in the product root — npm 12 blocks git dependencies by default (`allow-git=none`, supply-chain hardening); `root` allows only the ones written in the product's own `package.json`, transitive git deps stay blocked:
+
+```
+allow-git=root
 ```
 
 ```js
