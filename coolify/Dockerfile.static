@@ -1,0 +1,18 @@
+# MIK static site (Vite build → nginx) for a Coolify Application from git. Template from mik-kit:
+# copy to the product as Dockerfile, together with coolify/nginx.conf. Push = deploy; the previous image = rollback.
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+# prebuild runs `mik-kit check-i18n` — a missing translation fails the deploy, not the visitor
+RUN npm run build
+RUN npx mik-kit nginx-headers > /app/mik-security.conf
+
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/mik-security.conf /etc/nginx/snippets/mik-security.conf
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget -qO /dev/null http://127.0.0.1/ || exit 1
+CMD ["nginx", "-g", "daemon off;"]

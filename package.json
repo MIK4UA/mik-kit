@@ -1,0 +1,27 @@
+{
+  "name": "mik-kit",
+  "version": "0.1.0",
+  "description": "Shared base for every MIK site and service on own code: brand tokens, security headers + CSP, languages check, Coolify template",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "bin": { "mik-kit": "bin/mik-kit.mjs" },
+  "exports": {
+    ".": "./lib/index.mjs",
+    "./tokens.css": "./brand/tokens.css",
+    "./tokens.json": "./brand/tokens.json",
+    "./fonts.css": "./brand/fonts.css",
+    "./security": "./lib/security.mjs",
+    "./i18n": "./lib/i18n.mjs"
+  },
+  "files": ["bin", "lib", "brand", "coolify", "scripts"],
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "tokens": "node scripts/gen-tokens.mjs",
+    "tokens:check": "node scripts/gen-tokens.mjs --check"
+  },
+  "dependencies": {
+    "@fontsource/montserrat": "^5.3.0"
+  }
+}
