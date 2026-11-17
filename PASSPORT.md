@@ -1,5 +1,5 @@
 ---
-sota: "0.5"
+sota: "0.7"
 id: mik-kit
 name: MIK Kit (общий набор для своего кода)
 level: subproject
@@ -8,9 +8,21 @@ scope: own
 parent: "[[services-passport]]"
 status: active
 owner: mikhail
+serves:
+  - { id: level-5-projects, kind: level, status: manual }
 links:
   source: mikhail/products/mik-kit/
   tz: docs/tz/2026-10-24-system-unity.md
+plan:
+  # черновик агента 17.11.2026 по фактам (задачи, память, обзор 15.11): ждёт правки Михаила; после правки строку draft убрать
+  draft: true
+  ideal: "Все сайты и сервисы MIK на своём коде берут оформление, заголовки безопасности, проверку языков и шаблон выкладки из одного набора; сенсор связности показывает зелёное по Б1–Б9."
+  horizon: 2027-03-31
+  bottleneck: "Набор подключён к одному продукту (сайт mik4ua); Commander, Portavia, Сметчик и дашборд живут на своих копиях"
+  milestones:
+    - { id: mik-kit-m1, name: "Portavia и MIK Commander подключены, проверка заголовков зелёная после выкладки", date: 2026-12-31, est: true, status: planned, needs: "—", depends: [] }
+    - { id: mik-kit-m2, name: "Клиент MIK ID в наборе", date: 2027-02-28, est: true, status: planned, needs: "—", depends: [likra-site-m2] }
+    - { id: mik-kit-m3, name: "Подключены все продукты из сенсора связности", date: 2027-03-31, est: true, status: planned, needs: "—", depends: [mik-kit-m1] }
 ---
 
 # MIK Kit — общий набор для сайтов и сервисов на своём коде
